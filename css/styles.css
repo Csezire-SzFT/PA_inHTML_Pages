@@ -1,0 +1,20 @@
+#grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+   gap: 12px;
+   padding: 16px;
+}
+
+#grid a {
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   text-align: center;
+   text-decoration: none;
+}
+
+.back {
+   display: inline-block;
+   margin: 16px;
+   text-decoration: none;
+}
