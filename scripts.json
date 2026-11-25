@@ -1,3 +1,14 @@
 [
-  "OrkGoblinXP.py"
+  "CiklusokFelhasznalasa.py",
+  "OrkGoblinXP.py",
+  "RobotokTippelnek.py",
+  "RobotokTippelnek_v2.py",
+  "RobotokTippelnek_v3.py",
+  "RobotokTippelnek_v4.py",
+  "algoritmics.py",
+  "harcosvarazslo.py",
+  "ifandmethod.py",
+  "jegy_valasztas.py",
+  "main.py",
+  "teglalap.py"
 ]
