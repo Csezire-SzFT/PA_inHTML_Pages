@@ -1,4 +1,4 @@
-# OrkGoblinXP – Python a böngészőben (PyScript)
+# Python a böngészőben (PyScript)
 
 ## Mappaszerkezet
 
@@ -30,12 +30,12 @@ A workflow kétféleképpen indul:
 ### Lépések
 
 A workflow egy GitHub által biztosított Ubuntu virtuális gépen fut:
-1. A repository tartalma felkerül a gépre.
-2. Listát készít a `pythons` mappa `.py` fájljairól.
-3. Minden útvonalból csak a fájlnevet tartja meg.
-4. A neveket JSON tömbbé alakítja.
-5. A tömböt kiírja a `scripts.json` fájlba.
-6. Ha van változás, `commit` és `push` következik.
+- A repository tartalma felkerül a gépre.
+- Listát készít a `pythons` mappa `.py` fájljairól.
+- Minden útvonalból csak a fájlnevet tartja meg.
+- A neveket JSON tömbbé alakítja.
+- A tömböt kiírja a `scripts.json` fájlba.
+- Ha van változás, `commit` és `push` következik.
 
 
 ## A HTML és a JS működése
@@ -44,7 +44,7 @@ Mindig ugyanaz az `index.html` töltődik be, csak más URL-lel. A JavaScript fu
 
 ### 1. Első betöltés
 
-URL: `https://csezire.github.io/REPO/`
+URL: `https://csezire.github.io/PA_inHTML_Pages/`
 
 - A böngésző betölti az `index.html`-t, a `core.css`-t és a `mini-coi.js`-t.
 - A `mini-coi.js` regisztrálja a service workert, első látogatáskor az oldal egyszer újratölt.
@@ -57,7 +57,7 @@ URL: `https://csezire.github.io/REPO/`
 - A cella sima link: `href="?s=OrkGoblinXP.py"`.
 - Ez teljes oldalújratöltés, a régi oldal eltűnik.
 
-### 3. Második betöltés (`?s=OrkGoblinXP.py`)
+### 3. Második betöltés (például `?s=OrkGoblinXP.py`)
 
 - Az `index.html` újra betöltődik, a lista is.
 - A `wanted` értéke `"OrkGoblinXP.py"`, ez szerepel a listában, így az `if` ág fut.
