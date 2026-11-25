@@ -1,6 +1,5 @@
 body {
    background-color: black;
-   color: lightgreen;
 }
 
 #grids {
@@ -17,10 +16,12 @@ body {
    border-radius: 8px;
    text-align: center;
    text-decoration: none;
+   color: lightgreen;
 }
 
 .back {
    display: inline-block;
    margin: 16px;
    text-decoration: none;
+   color: lightgreen;
 }
