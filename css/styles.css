@@ -3,7 +3,7 @@ body {
    color: lightgreen;
 }
 
-#grid {
+#grids {
    display: grid;
    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 /* annyi oszlop lesz, amennyi kifér, minimálos 180px szélesség mellett; ha van maradék, egyenletesen eloszlik */
@@ -11,7 +11,7 @@ body {
    padding: 16px;
 }
 
-#grid a {
+#grids a {
    padding: 20px;
    border: 1px solid #ccc;
    border-radius: 8px;

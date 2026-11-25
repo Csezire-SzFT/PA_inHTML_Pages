@@ -1,5 +1,5 @@
 const pySources = "pythons";
-const gridInHTML = document.getElementById("grid");
+const gridInHTML = document.getElementById("grids");
 
 const res = await fetch("./scripts.json");
 if (!res.ok) {
@@ -23,10 +23,10 @@ if (wanted && files.includes(wanted)) {
    const scriptTag = document.createElement("script");
    scriptTag.type = "py";
    scriptTag.src = `./${pySources}/${encodeURIComponent(wanted)}`;
-   scriptTag.setAttribute("config", "./config.toml");     // ÚJ: a közös konfiguráció betöltése
+   scriptTag.setAttribute("config", "./config.toml");     // a közös konfiguráció betöltése
    scriptTag.setAttribute("worker", "");
    scriptTag.setAttribute("terminal", "");
-      document.body.append(scriptTag);
+   document.body.append(scriptTag);
 
    await import("https://pyscript.net/releases/2026.7.3/core.js");
 } 

@@ -16,27 +16,48 @@ repo/
 │   └── OrkGoblinXP.py                 ← futtatható py-script, importálhat a lib-ből
 ├── config.toml                        ← megmondja, mit másoljon be futtatás előtt
 ├── index.html                         ← az alap HTML oldal
-├── mini-coi.js                        ← sevice worker, a py-scriptek futtatásának támogatása
+├── mini-coi.js                        ← service worker, a py-scriptek futtatásának támogatása
 └── scripts.json                       ← a pythons könyvtárban található py-scriptek listája
 ```
+
+A `lib/` mappát a workflow nem látja (csak a `pythons/*.py` fájlokat listázza), ezért a segédmodulok nem jelennek meg kattintható cellaként.
+
+## A config.toml
+
+A `config.toml` a repó gyökerében van:
+
+```toml
+# Külső csomagok (csak ha kellenek, pl. numpy)
+# packages = ["numpy"]
+
+[files]
+# "forrás URL" = "hová kerüljön a virtuális fájlrendszerben"
+"./lib/seged.py"          = "./seged.py"
+"./lib/jatek/__init__.py" = "./jatek/__init__.py"
+"./lib/jatek/kocka.py"    = "./jatek/kocka.py"
+```
+
+Minden modulfájlt külön sorban kell felsorolni. Új modul felvétele után ide is be kell írni egy sort. A fájl a gyökérben van, így az útvonalak az oldalhoz és a config fájlhoz képest is ugyanúgy értelmezhetőek.
 
 ## A workflow
 
 A workflow kétféleképpen indul:
+
 - kézzel
 - automatikusan, ha a `pythons` mappába push-sal új fájl érkezik
+
 Írási jogot kap a repositoryhoz, hogy a frissített `scripts.json` visszaírható legyen.
 
 ### Lépések
 
 A workflow egy GitHub által biztosított Ubuntu virtuális gépen fut:
+
 - A repository tartalma felkerül a gépre.
 - Listát készít a `pythons` mappa `.py` fájljairól.
 - Minden útvonalból csak a fájlnevet tartja meg.
 - A neveket JSON tömbbé alakítja.
 - A tömböt kiírja a `scripts.json` fájlba.
 - Ha van változás, `commit` és `push` következik.
-
 
 ## A HTML és a JS működése
 
