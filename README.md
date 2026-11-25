@@ -46,11 +46,11 @@ Mindig ugyanaz az `index.html` töltődik be, csak más URL-lel. A JavaScript fu
 
 URL: `https://csezire.github.io/REPO/`
 
-1. A böngésző betölti az `index.html`-t, a `core.css`-t és a `mini-coi.js`-t.
-2. A `mini-coi.js` regisztrálja a service workert, első látogatáskor az oldal egyszer újratölt.
-3. Lefut a `<script type="module">`, és lekéri a `scripts.json`-t.
-4. Nincs `?s=` paraméter, ezért a `wanted` értéke `null`, és az `else` ág fut: linket készít minden `.py` fájlhoz.
-5. A PyScript (`core.js`) ilyenkor még nem töltődik be.
+- A böngésző betölti az `index.html`-t, a `core.css`-t és a `mini-coi.js`-t.
+- A `mini-coi.js` regisztrálja a service workert, első látogatáskor az oldal egyszer újratölt.
+- Lefut a `<script type="module">`, és lekéri a `scripts.json`-t.
+- Nincs `?s=` paraméter, ezért a `wanted` értéke `null`, és az `else` ág fut: linket készít minden `.py` fájlhoz.
+- A PyScript (`core.js`) ilyenkor még nem töltődik be.
 
 ### 2. Kattintás egy cellára
 
@@ -59,10 +59,10 @@ URL: `https://csezire.github.io/REPO/`
 
 ### 3. Második betöltés (`?s=OrkGoblinXP.py`)
 
-1. Az `index.html` újra betöltődik, a lista is.
-2. A `wanted` értéke `"OrkGoblinXP.py"`, ez szerepel a listában, így az `if` ág fut.
-3. A JS eltávolítja a rácsot, és létrehozza a `<script type="py" ...>` elemet.
-4. Betölti a `core.js`-t, a PyScript elindul, és kirajzolja a terminált.
+- Az `index.html` újra betöltődik, a lista is.
+- A `wanted` értéke `"OrkGoblinXP.py"`, ez szerepel a listában, így az `if` ág fut.
+- A JS eltávolítja a rácsot, és létrehozza a `<script type="py" ...>` elemet.
+- Betölti a `core.js`-t, a PyScript elindul, és kirajzolja a terminált.
 
 ### 4. Amit érdemes tudni
 
