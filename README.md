@@ -1,65 +1,72 @@
+# OrkGoblinXP – Python a böngészőben (PyScript)
 
-**A repo mappa szerkezete** <br>
-repo/ <br>
-├── .github/workflows/manifest.yml     (változatlan) <br>
-├── js/ <br>
-│   └── app.js                         (1 sor bővül) <br>
-├── lib/                               ← ÚJ: a segédmodulok, a rács nem listázza <br>
-│   ├── seged.py <br>
-│   └── jatek/                         ← példa csomagra (almappa) <br>
-│       ├── __init__.py <br>
-│       └── kocka.py <br>
-├── pythons/ <br>
-│   └── OrkGoblinXP.py                 ← futtatható script, importál a lib-ből <br>
-├── config.toml                        ← ÚJ: megmondja, mit másoljon be a futtatás előtt <br>
-├── index.html                         (változatlan) <br>
-├── mini-coi.js                        (változatlan) <br>
-└── scripts.json                       (automatikus) <br>
+## Mappaszerkezet
+
+```
+repo/
+├── .github/workflows/manifest.yml     (változatlan)
+├── js/
+│   └── app.js                         (1 sor bővül)
+├── lib/                               ← ÚJ: segédmodulok, a rács nem listázza
+│   ├── seged.py
+│   └── jatek/                         ← példa csomagra (almappa)
+│       ├── __init__.py
+│       └── kocka.py
+├── pythons/
+│   └── OrkGoblinXP.py                 ← futtatható script, importál a lib-ből
+├── config.toml                        ← ÚJ: megmondja, mit másoljon be futtatás előtt
+├── index.html                         (változatlan)
+├── mini-coi.js                        (változatlan)
+└── scripts.json                       (automatikus)
+```
+
+## A workflow
+
+A workflow kétféleképpen indul:
+- kézzel
+- automatikusan, ha a `pythons` mappába push-sal új fájl érkezik
+Írási jogot kap a repositoryhoz, hogy a frissített `scripts.json` visszaírható legyen.
+
+### Lépések
+
+A workflow egy GitHub által biztosított Ubuntu virtuális gépen fut:
+1. A repository tartalma felkerül a gépre.
+2. Listát készít a `pythons` mappa `.py` fájljairól.
+3. Minden útvonalból csak a fájlnevet tartja meg.
+4. A neveket JSON tömbbé alakítja.
+5. A tömböt kiírja a `scripts.json` fájlba.
+6. Ha van változás, `commit` és `push` következik.
 
 
-**A workflow file leírása** <br>
+## A HTML és a JS működése
 
-A workflow két módon indul <br>
- - kézileg <br>
- - automatikusan, ha a pythons mappába egy push művelettel új file érkezik <br>
+Mindig ugyanaz az `index.html` töltődik be, csak más URL-lel. A JavaScript futás közben építi fel, mit jelenítsen meg.
 
-A workflow írási jogot kap a repository felett (ahová fel lett töltve), hogy a frissített file listát tartalmazó script.json visszaírásra kerülhessen a repository-ba. <br>
+### 1. Első betöltés
 
-A workflow <br>
- - egy - a github által biztosított - virtuális gépen (Linux - Ubuntu OS) fog futni <br>
- - a repository tartalma felkerül erre a virtuális gépre, hogy a benne lévő adatok elérhetőek legyenek <br>
- - a CLI-ben (Linux) elindul egy többlépcsős folyamat, melynek során <br>
-   = készít egy listát a pythons mappában lévő py kiterjesztésű file-okról a mappa nevével együtt (ls) <br>
-   = minden egyes file-névből levágja az útvonalat, csak a file-nevet adja vissza <br>
-   = a file-neveket JSON formátumúra alakítja és egy tömbbe rendezi <br>
-   = a tömböt kiírja a script.json file-ba <br>
- - ezután ellenőrzésre kerül van-e változás, és ha igen, akkor lefut egy commit és egy push a frissítés érdekében <br>
+URL: `https://csezire.github.io/REPO/`
 
+1. A böngésző betölti az `index.html`-t, a `core.css`-t és a `mini-coi.js`-t.
+2. A `mini-coi.js` regisztrálja a service workert, első látogatáskor az oldal egyszer újratölt.
+3. Lefut a `<script type="module">`, és lekéri a `scripts.json`-t.
+4. Nincs `?s=` paraméter, ezért a `wanted` értéke `null`, és az `else` ág fut: linket készít minden `.py` fájlhoz.
+5. A PyScript (`core.js`) ilyenkor még nem töltődik be.
 
-**A HTML és a kapcsolódó JS működése** <br>
+### 2. Kattintás egy cellára
 
-Mindig ugyanaz az index.html töltődik be, csak más URL-lel, és a JavaScript a böngészőben, futás közben építi fel, hogy mit jelenítsen meg. A Menet lépésről lépésre <br>
+- A cella sima link: `href="?s=OrkGoblinXP.py"`.
+- Ez teljes oldalújratöltés, a régi oldal eltűnik.
 
-1. Első betöltés: https://csezire.github.io/REPO/
-   1.1. A böngésző betölti az index.html-t, a core.css-t és a mini-coi.js-t.
-   1.2. A mini-coi.js regisztrálja a service workert. Ha ez az első látogatás, az oldal egyszer automatikusan újratölt, hogy a worker átvegye az irányítást.
-   1.3. Lefut a <script type="module">: lekéri a fájllistát (scripts.json).
-   1.4. Az URL-ben nincs ?s= paraméter, ezért a wanted értéke null, és az else ág fut le. Ez egy <a> linket készít minden .py fájlhoz, és berakja a rácsba.
-   1.5. A PyScript (core.js) ilyenkor még be sem töltődik, mert nincs mit futtatnia.
+### 3. Második betöltés (`?s=OrkGoblinXP.py`)
 
-2. Kattintás egy cellára
-   2.1. A cella egy sima link: href="?s=OrkGoblinXP.py".
-   2.2. A böngésző ugyanarra az oldalra navigál, csak az URL végére kerül a paraméter: .../REPO/?s=OrkGoblinXP.py.
-   2.3. Ez teljes oldalújratöltés, vagyis a régi oldal és minden, ami rajta futott, eltűnik.
+1. Az `index.html` újra betöltődik, a lista is.
+2. A `wanted` értéke `"OrkGoblinXP.py"`, ez szerepel a listában, így az `if` ág fut.
+3. A JS eltávolítja a rácsot, és létrehozza a `<script type="py" ...>` elemet.
+4. Betölti a `core.js`-t, a PyScript elindul, és kirajzolja a terminált.
 
-3. Második betöltés: ...?s=OrkGoblinXP.py
-   3.1. Ugyanaz az index.html töltődik be, a lista újra lekérődik.
-   3.2. Most a wanted értéke "OrkGoblinXP.py", és szerepel a fájllistában, így az if ág fut le.
-   3.3. A JS eltávolítja a rácsot, és létrehoz egy új <script type="py" src="./pythons/OrkGoblinXP.py" worker terminal> elemet, ami pont ugyanaz, mint amit eddig kézzel íródott az index.html-be. A különbség csak az, hogy most a JS illeszti be.
-   3.4. Utána betölti a core.js-t. A PyScript elindul, megtalálja ezt a taget, letölti a Python fájlt, elindítja a workert, és kirajzolja a terminált.
+### 4. Amit érdemes tudni
 
-4. Mi van, ami nem látszik elsőre
-   4.1. Nincs "új link generálás": a link a rács építésekor készül (?s=fájlnév), a címsorba is be lehet másolni, és bárkinek elküldhető, aki így közvetlenül egy adott scriptet nyit meg.
-   4.2. Az engedélyezési lista (files.includes(wanted)) miatt csak olyan fájl indulhat el, ami tényleg ott van a pythons mappában.
-   4.3. A core.js késleltetett betöltése azért fontos, mert a PyScript az induláskor végignézi az oldalt a type="py" tagekért. Ha előbb töltődne be, mint ahogy a JS létrehozza a tagot, nem találná meg.
-   4.4. Visszalépés: a böngésző vissza gombja a rácsra visz, ami szintén újratölt, így a futó script leáll. A scriptek között váltani is csak így lehet, ami szándékos, mert így nincs két interpreter és két terminál egymás nyakán.
+- **Megosztható link:** a `?s=fájlnév` link bárkinek elküldhető.
+- **Engedélyezési lista:** a `files.includes(wanted)` miatt csak a `pythons` mappában lévő fájl indulhat.
+- **Késleltetett `core.js`:** a PyScript induláskor keresi a `type="py"` tageket, ezért csak a tag létrehozása után töltődhet be.
+- **Visszalépés:** a vissza gomb a rácsra visz, a futó script leáll, így nincs két interpreter egyszerre.
