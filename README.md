@@ -4,20 +4,20 @@
 
 ```
 repo/
-├── .github/workflows/manifest.yml     (változatlan)
+├── .github/workflows/manifest.yml     ← workflow a scripts.json frissítéséhez
 ├── js/
-│   └── app.js                         (1 sor bővül)
-├── lib/                               ← ÚJ: segédmodulok, a rács nem listázza
+│   └── app.js                         ← a fő vezérlés: megjelenítés vagy py-script futtatás előkészítése
+├── lib/                               ← segédmodulok, a rács nem listázza
 │   ├── seged.py
 │   └── jatek/                         ← példa csomagra (almappa)
 │       ├── __init__.py
 │       └── kocka.py
 ├── pythons/
-│   └── OrkGoblinXP.py                 ← futtatható script, importál a lib-ből
-├── config.toml                        ← ÚJ: megmondja, mit másoljon be futtatás előtt
-├── index.html                         (változatlan)
-├── mini-coi.js                        (változatlan)
-└── scripts.json                       (automatikus)
+│   └── OrkGoblinXP.py                 ← futtatható py-script, importálhat a lib-ből
+├── config.toml                        ← megmondja, mit másoljon be futtatás előtt
+├── index.html                         ← az alap HTML oldal
+├── mini-coi.js                        ← sevice worker, a py-scriptek futtatásának támogatása
+└── scripts.json                       ← a pythons könyvtárban található py-scriptek listája
 ```
 
 ## A workflow
