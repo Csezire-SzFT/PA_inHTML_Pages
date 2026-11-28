@@ -10,5 +10,6 @@
   "harcosvarazslo.py",
   "ifandmethod.py",
   "jegy_valasztas.py",
-  "main.py"
+  "main.py",
+  "problema.py"
 ]
